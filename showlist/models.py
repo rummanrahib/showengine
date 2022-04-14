@@ -5,27 +5,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
-class ShowList(models.Model):
-    # ForeignKey Fields
-    platform = models.ForeignKey(
-        'StreamPlatform', on_delete=models.CASCADE, related_name='show_list')
-    # ...
-
-    title = models.CharField(max_length=100)
-    plot = models.TextField()
-    average_rating = models.FloatField(default=0)
-    total_ratings = models.IntegerField(default=0)
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = 'Show List'
-        verbose_name_plural = 'Show Lists'
-
-    def __str__(self):
-        return self.title
-
-
 class StreamPlatform(models.Model):
     name = models.CharField(max_length=100)
     about = models.TextField()
@@ -40,6 +19,28 @@ class StreamPlatform(models.Model):
         return self.name
 
 
+class ShowList(models.Model):
+    # ForeignKey Fields
+    platform = models.ForeignKey(
+        StreamPlatform, on_delete=models.CASCADE, related_name='show_list')
+    # ...
+
+    title = models.CharField(max_length=100)
+    plot = models.TextField()
+    average_rating = models.FloatField(default=0)
+    total_ratings = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Show List'
+        verbose_name_plural = 'Show Lists'
+
+    def __str__(self):
+        return self.title
+
+
 class Review(models.Model):
     # ForeignKey Fields
     author = models.ForeignKey(
@@ -52,6 +53,7 @@ class Review(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)])
     description = models.TextField(null=True, blank=True)
     is_valid = models.BooleanField(default=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

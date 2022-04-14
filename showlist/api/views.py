@@ -76,7 +76,7 @@ class ReviewListView(generics.ListAPIView):
         return Review.objects.filter(show_list=pk)
 
     serializer_class = ReviewSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     throttle_classes = [ReviewListThrottle, AnonRateThrottle]
     filter_backends = [DjangoFilterBackend]
     filter_fields = ['author__username', 'is_valid']

@@ -1,4 +1,5 @@
-# from account import models # calling the create_auth_token signal from models.py for auto generated tokens
+from account import \
+    models  # calling the create_auth_token signal from models.py for auto generated tokens
 from account.api.serializers import RegistrationSerializer
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -21,23 +22,23 @@ def registration_view(request):
             data['email'] = account.email
 
             # createing token manually for TokenAuthentication
-            # token = Token.objects.get(user=account).key
-            # data['token'] = token
+            token = Token.objects.get(user=account).key
+            data['token'] = token
             # ...
 
             # Creating token manually for JWT
-            refresh = RefreshToken.for_user(account)
+            # refresh = RefreshToken.for_user(account)
 
-            data['token'] = {
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            }
+            # data['token'] = {
+            #     'refresh': str(refresh),
+            #     'access': str(refresh.access_token),
+            # }
             # ...
 
         else:
             data = serializer.errors
 
-        return Response(data)
+        return Response(data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['POST', ])
