@@ -16,23 +16,23 @@ from showlist.api.throttling import CreateReviewThrottle, ReviewListThrottle
 from showlist.models import Review, ShowList, StreamPlatform
 
 
-class UserReviewView(generics.ListAPIView):
-    # queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
-    # permission_classes = [IsAuthenticated]
-    # throttle_classes = [ReviewListThrottle, AnonRateThrottle]
+# class UserReviewView(generics.ListAPIView):
+#     # queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
+#     # permission_classes = [IsAuthenticated]
+#     # throttle_classes = [ReviewListThrottle, AnonRateThrottle]
 
-    # Filtering against the URL
-    # def get_queryset(self):
-    #     username = self.kwargs['username']
-    #     return Review.objects.filter(author__username=username)
-    # ...
+#     # Filtering against the URL
+#     # def get_queryset(self):
+#     #     username = self.kwargs['username']
+#     #     return Review.objects.filter(author__username=username)
+#     # ...
 
-    # Filtering against query parameters
-    def get_queryset(self):
-        username = self.request.query_params.get('username')
-        return Review.objects.filter(author__username=username)
-    # ...
+#     # Filtering against query parameters
+#     def get_queryset(self):
+#         username = self.request.query_params.get('username')
+#         return Review.objects.filter(author__username=username)
+#     # ...
 
 
 # using Concrete View Classes
